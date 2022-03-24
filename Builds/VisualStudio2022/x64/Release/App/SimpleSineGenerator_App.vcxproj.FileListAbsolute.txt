@@ -1,0 +1,2 @@
+C:\Users\rapha\Coding\C++\TestProjects\SimpleSineGenerator\SimpleSineGenerator\Builds\VisualStudio2022\x64\Release\App\SimpleSineGenerator.exe
+C:\Users\rapha\Coding\C++\TestProjects\SimpleSineGenerator\Builds\VisualStudio2022\x64\Release\App\SimpleSineGenerator.exe
