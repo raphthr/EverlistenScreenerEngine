@@ -66,10 +66,10 @@ AudioStream::AudioStream()
     startButton.setRadioGroupId(StartStopButtons);
     stopButton.setRadioGroupId(StartStopButtons);
 
-    addAndMakeVisible(maxVolume);
-    maxVolume.setText("Maximum volume reached!", juce::dontSendNotification);
-    maxVolume.setEditable(false);
-    maxVolume.setVisible(false);
+    addAndMakeVisible(maxVolumeText);
+    maxVolumeText.setText("Maximum volume reached!", juce::dontSendNotification);
+    maxVolumeText.setEditable(false);
+    maxVolumeText.setVisible(false);
 
     addAndMakeVisible(testResultLabel);
     testResultLabel.setText("Your hearing Level in dB FS: ", juce::dontSendNotification);
@@ -101,16 +101,13 @@ void AudioStream::prepareToPlay(int samplesPerBlockExpected, double sampleRate)
 
     currentVolume = db2Mag(volSlider.getMinimum());
     targetVolume = db2Mag(volSlider.getMinimum());
-    phase = 0.0;
-    modPhase = 0.0;
-    updateAngleDelta(freqSlider, phaseDelta);
-    updateAngleDelta(modSlider, modPhaseDelta);
+    channel = leftButton.getToggleState() ? StereoChannel::LEFT : StereoChannel::RIGHT;
 
-    // initialize envelope and channel
+    // initialize objects
+    carrier = SineOscillator(sampleRate, freqSlider.getValue());
+    modulator = SineOscillator(sampleRate, modSlider.getValue());
     envelope = LinSweepGenerator(sampleRate, samplesPerBlockExpected, volSlider.getMinimum(),
                                  volSlider.getValue(), timeSlider.getValue());
-
-    channel = leftButton.getToggleState() ? StereoChannel::LEFT : StereoChannel::RIGHT;
 }
 
 void AudioStream::getNextAudioBlock(const juce::AudioSourceChannelInfo& bufferToFill)
@@ -118,11 +115,13 @@ void AudioStream::getNextAudioBlock(const juce::AudioSourceChannelInfo& bufferTo
     bufferToFill.clearActiveBufferRegion();
     auto* channelData = bufferToFill.buffer->getWritePointer((int) channel, bufferToFill.startSample);
     bool sweepIsFinished = false;
+    double carrierSample = 0.0;
+    double modSample = 0.0;
 
     targetVolume = db2Mag(envelope.getNextValue(Mag2db(targetVolume), sweepIsFinished));
 
     if (sweepIsFinished)
-        maxVolume.setVisible(true);
+        maxVolumeText.setVisible(true);
 
     if (targetVolume != currentVolume)
     {   
@@ -131,11 +130,11 @@ void AudioStream::getNextAudioBlock(const juce::AudioSourceChannelInfo& bufferTo
         for (auto i = 0; i < bufferToFill.numSamples; ++i)
         {
             // sample generation
-            channelData[i] = (float) (currentVolume * sin(phase) * (sin(modPhase) + 1.0) / 2.0);
+            carrierSample = carrier.getNextSample();
+            modSample = modulator.getNextSample();
+            channelData[i] = (float) (currentVolume * carrierSample * (modSample + 1.0) / 2.0);
 
             // increment the phase step and volume for the next sample
-            phase = fmod(phase + phaseDelta, 2 * M_PI);
-            modPhase = fmod(modPhase + modPhaseDelta, 2 * M_PI);
             currentVolume += volumeIncrement;
         }
         currentVolume = targetVolume;
@@ -145,11 +144,9 @@ void AudioStream::getNextAudioBlock(const juce::AudioSourceChannelInfo& bufferTo
         for (auto i = 0; i < bufferToFill.numSamples; ++i)
         {
             // sample generation
-            channelData[i] = (float) currentVolume * sin(phase) * (sin(modPhase) + 1.0) / 2.0;
-
-            // increment the phase step for the next sample
-            phase = fmod(phase + phaseDelta, 2 * M_PI);
-            modPhase = fmod(modPhase + modPhaseDelta, 2 * M_PI);
+            carrierSample = carrier.getNextSample();
+            modSample = modulator.getNextSample();
+            channelData[i] = (float) (currentVolume * carrierSample * (modSample + 1.0) / 2.0);
         }
     }
 }
@@ -159,11 +156,6 @@ void AudioStream::releaseResources()
     // This will be called when the audio device stops, or when it is being
     // restarted due to a setting change.
     // For more details, see the help for AudioProcessor::releaseResources()
-}
-
-void AudioStream::updateAngleDelta(juce::Slider& slider, double& angleDelta)
-{
-    angleDelta = 2.0 * M_PI * slider.getValue() / fs;
 }
 
 //==============================================================================
@@ -191,7 +183,7 @@ void AudioStream::resized()
     rightButton.setBounds(sliderLeft + 60, 140, getWidth() - 30, 20);
     startButton.setBounds(sliderLeft, 170, getWidth() - 30, 20);
     stopButton.setBounds(sliderLeft + 60, 170, getWidth() - 30, 20);
-    maxVolume.setBounds(sliderLeft + 120, 170, getWidth() - 30, 20);
+    maxVolumeText.setBounds(sliderLeft + 120, 170, getWidth() - 30, 20);
     testResult.setBounds(sliderLeft + 120, 200, getWidth() - 30, 20);
 }
 
@@ -201,9 +193,9 @@ void AudioStream::sliderValueChanged(juce::Slider* slider)
     if (slider == &volSlider)
         envelope.setMaxValue(volSlider.getValue());
     else if (slider == &freqSlider)
-        updateAngleDelta(freqSlider, phaseDelta);
+        carrier.setFrequency(slider->getValue());
     else if (slider == &modSlider)
-        updateAngleDelta(modSlider, modPhaseDelta);
+        modulator.setFrequency(slider->getValue());
     else if (slider == &timeSlider)
         envelope.setSweepTime(timeSlider.getValue());
 }
@@ -216,7 +208,7 @@ void AudioStream::updateToggleState(juce::Button* button, juce::String name)
     else if ((button == &startButton) && (startButton.getToggleState()))
     {   
         testResult.setText(" ", juce::dontSendNotification);
-        maxVolume.setVisible(false);
+        maxVolumeText.setVisible(false);
         targetVolume = db2Mag(volSlider.getMinimum());
         envelope.startSweep();
     }

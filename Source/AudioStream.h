@@ -7,6 +7,7 @@
 #include <string>
 #include "utility.h"
 #include "LinSweepGenerator.h"
+#include "SineOscillator.h"
 
 //==============================================================================
 /*
@@ -25,7 +26,6 @@ public:
     void prepareToPlay(int samplesPerBlockExpected, double sampleRate) override;
     void getNextAudioBlock(const juce::AudioSourceChannelInfo& bufferToFill) override;
     void releaseResources() override;
-    void updateAngleDelta(juce::Slider& slider, double& angleDelta);
 
     //==============================================================================
     void paint(juce::Graphics& g) override;
@@ -46,11 +46,9 @@ private:
     double currentVolume;
     double targetVolume;
 
-    double phase;
-    double phaseDelta;
-    double modPhase;
-    double modPhaseDelta;
 
+    SineOscillator carrier;
+    SineOscillator modulator;
     LinSweepGenerator envelope;
     StereoChannel channel;
 
@@ -72,7 +70,7 @@ private:
     juce::ToggleButton startButton{ "Start" },
                        stopButton{ "Stop" };
 
-    juce::Label maxVolume;
+    juce::Label maxVolumeText;
     juce::Label testResult;
     juce::Label testResultLabel;
 

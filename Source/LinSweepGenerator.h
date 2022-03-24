@@ -18,8 +18,8 @@ class LinSweepGenerator
 {
 public:
     //==============================================================================
-    LinSweepGenerator(double samplerate, int buffsize, double minvalue, 
-                      double maxvalue, double sweeptime);
+    LinSweepGenerator(double _fs, int _bufferSize, double _minValue, 
+                      double _maxValue, double _sweepTime);
     LinSweepGenerator();
     ~LinSweepGenerator();
 

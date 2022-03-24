@@ -1,8 +1,5 @@
 ﻿  AudioStream.cpp
-  SineOscillator.cpp
-C:\Users\rapha\Coding\C++\TestProjects\SimpleSineGenerator\Source\AudioStream.cpp(148,89): warning C4244: "=": Konvertierung von "double" in "Type", möglicher Datenverlust
-          with
-          [
-              Type=float
-          ]
+  Main.cpp
+C:\Users\rapha\Coding\C++\TestProjects\SimpleSineGenerator\Source\Main.cpp(24,41): warning C4100: "commandLine": Unreferenzierter formaler Parameter
+C:\Users\rapha\Coding\C++\TestProjects\SimpleSineGenerator\Source\Main.cpp(46,53): warning C4100: "commandLine": Unreferenzierter formaler Parameter
   SimpleSineGenerator_App.vcxproj -> C:\Users\rapha\Coding\C++\TestProjects\SimpleSineGenerator\Builds\VisualStudio2022\x64\Debug\App\SimpleSineGenerator.exe

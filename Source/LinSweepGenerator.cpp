@@ -12,14 +12,14 @@
 
 #include "LinSweepGenerator.h"
 
-LinSweepGenerator::LinSweepGenerator(double samplerate, int buffsize, double minvalue,
-                                     double maxvalue, double sweeptime)
+LinSweepGenerator::LinSweepGenerator(double _fs, int _bufferSize, double _minValue,
+                                     double _maxValue, double _sweepTime)
 {
-    fs = samplerate;
-    bufferSize = buffsize;
-    minValue = minvalue;
-    maxValue = maxvalue;
-    sweepTime = sweeptime;
+    fs = _fs;
+    bufferSize = _bufferSize;
+    minValue = _minValue;
+    maxValue = _maxValue;
+    sweepTime = _sweepTime;
     isActive = false;
     updateDelta();
 }
