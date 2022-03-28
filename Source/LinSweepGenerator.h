@@ -20,18 +20,17 @@ public:
     //==============================================================================
     LinSweepGenerator(double _fs, int _bufferSize, double _minValue, 
                       double _maxValue, double _sweepTime);
-    LinSweepGenerator();
     ~LinSweepGenerator();
 
     //==============================================================================
     double getNextValue(double currentValue);
-    double getNextValue(double currentValue, bool& isFinished);
     double getMinValue();
     double getMaxValue();
     double getSweepTime();
     double getFs();
     int getBufferSize();
     bool getActive();
+    bool getFinished();
     
     
     //==============================================================================
@@ -53,6 +52,7 @@ private:
     double sweepTime;
     double deltaPerBlock;
     bool isActive;
+    bool isFinished;
 
     void updateDelta();
 };

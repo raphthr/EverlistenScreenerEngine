@@ -139,7 +139,7 @@
     <Lib/>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\Source\SineOscillator.cpp"/>
+    <ClCompile Include="..\..\Source\WaveTableOscillator.cpp"/>
     <ClCompile Include="..\..\Source\LinSweepGenerator.cpp"/>
     <ClCompile Include="..\..\Source\utility.cpp"/>
     <ClCompile Include="..\..\Source\Main.cpp"/>
@@ -2100,7 +2100,7 @@
     <ClCompile Include="..\..\JuceLibraryCode\include_juce_gui_extra.cpp"/>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\Source\SineOscillator.h"/>
+    <ClInclude Include="..\..\Source\WaveTableOscillator.h"/>
     <ClInclude Include="..\..\Source\LinSweepGenerator.h"/>
     <ClInclude Include="..\..\Source\utility.h"/>
     <ClInclude Include="..\..\Source\AudioStream.h"/>

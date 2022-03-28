@@ -1,8 +1,7 @@
 #include "AudioStream.h"
 
-//==============================================================================
 AudioStream::AudioStream()
-{
+{   
     // initialize sliders and labels
     addAndMakeVisible(volSlider);
     volSlider.setRange(-96.0, -3.0, 3.0);
@@ -77,25 +76,34 @@ AudioStream::AudioStream()
 
     addAndMakeVisible(testResult);
     testResult.setText(" ", juce::dontSendNotification);
+
+    // initialize wavetable
+    createSineTable(sineTable, 1024);
     
     // set initial window size
     setSize(800, 600);
 
     // set 2 audio channels (stereo)
     setAudioChannels(0, 2);
+
+    // start timer for timer callback
+    startTimer(100);
 }
 
 AudioStream::~AudioStream()
 {
     // This shuts down the audio device and clears the audio source.
     shutdownAudio();
+    delete envelope, carrier, modulator;
 }
 
 //==============================================================================
 void AudioStream::prepareToPlay(int samplesPerBlockExpected, double sampleRate)
 {
+    // This function is called once (on the audio thread)
+    // before audio playback starts.
     // For more details, see the help for AudioProcessor::prepareToPlay()
-    // initialize values
+
     fs = sampleRate;
     bufferSize = samplesPerBlockExpected;
 
@@ -103,10 +111,9 @@ void AudioStream::prepareToPlay(int samplesPerBlockExpected, double sampleRate)
     targetVolume = db2Mag(volSlider.getMinimum());
     channel = leftButton.getToggleState() ? StereoChannel::LEFT : StereoChannel::RIGHT;
 
-    // initialize objects
-    carrier = SineOscillator(sampleRate, freqSlider.getValue());
-    modulator = SineOscillator(sampleRate, modSlider.getValue());
-    envelope = LinSweepGenerator(sampleRate, samplesPerBlockExpected, volSlider.getMinimum(),
+    carrier = new WaveTableOscillator(sampleRate, freqSlider.getValue(), sineTable);
+    modulator = new WaveTableOscillator(sampleRate, modSlider.getValue(), sineTable);
+    envelope = new LinSweepGenerator(sampleRate, samplesPerBlockExpected, volSlider.getMinimum(),
                                  volSlider.getValue(), timeSlider.getValue());
 }
 
@@ -114,14 +121,10 @@ void AudioStream::getNextAudioBlock(const juce::AudioSourceChannelInfo& bufferTo
 {
     bufferToFill.clearActiveBufferRegion();
     auto* channelData = bufferToFill.buffer->getWritePointer((int) channel, bufferToFill.startSample);
-    bool sweepIsFinished = false;
     double carrierSample = 0.0;
     double modSample = 0.0;
 
-    targetVolume = db2Mag(envelope.getNextValue(Mag2db(targetVolume), sweepIsFinished));
-
-    if (sweepIsFinished)
-        maxVolumeText.setVisible(true);
+    targetVolume = db2Mag(envelope->getNextValue(Mag2db(targetVolume)));
 
     if (targetVolume != currentVolume)
     {   
@@ -130,11 +133,11 @@ void AudioStream::getNextAudioBlock(const juce::AudioSourceChannelInfo& bufferTo
         for (auto i = 0; i < bufferToFill.numSamples; ++i)
         {
             // sample generation
-            carrierSample = carrier.getNextSample();
-            modSample = modulator.getNextSample();
+            carrierSample = carrier->getNextSample();
+            modSample = modulator->getNextSample();
             channelData[i] = (float) (currentVolume * carrierSample * (modSample + 1.0) / 2.0);
 
-            // increment the phase step and volume for the next sample
+            // increment the volume for the next sample
             currentVolume += volumeIncrement;
         }
         currentVolume = targetVolume;
@@ -144,8 +147,8 @@ void AudioStream::getNextAudioBlock(const juce::AudioSourceChannelInfo& bufferTo
         for (auto i = 0; i < bufferToFill.numSamples; ++i)
         {
             // sample generation
-            carrierSample = carrier.getNextSample();
-            modSample = modulator.getNextSample();
+            carrierSample = carrier->getNextSample();
+            modSample = modulator->getNextSample();
             channelData[i] = (float) (currentVolume * carrierSample * (modSample + 1.0) / 2.0);
         }
     }
@@ -159,6 +162,12 @@ void AudioStream::releaseResources()
 }
 
 //==============================================================================
+void AudioStream::timerCallback()
+{
+    if (envelope->getFinished())
+        maxVolumeText.setVisible(true);
+}
+
 void AudioStream::paint(juce::Graphics& g)
 {
     // (Our component is opaque, so we must completely fill the background with a solid colour)
@@ -191,13 +200,13 @@ void AudioStream::sliderValueChanged(juce::Slider* slider)
 {   
     //maybe check if fs > 0.0 to see if app is currently running
     if (slider == &volSlider)
-        envelope.setMaxValue(volSlider.getValue());
+        envelope->setMaxValue(volSlider.getValue());
     else if (slider == &freqSlider)
-        carrier.setFrequency(slider->getValue());
+        carrier->setFrequency(slider->getValue());
     else if (slider == &modSlider)
-        modulator.setFrequency(slider->getValue());
+        modulator->setFrequency(slider->getValue());
     else if (slider == &timeSlider)
-        envelope.setSweepTime(timeSlider.getValue());
+        envelope->setSweepTime(timeSlider.getValue());
 }
 
 void AudioStream::updateToggleState(juce::Button* button, juce::String name)
@@ -210,12 +219,12 @@ void AudioStream::updateToggleState(juce::Button* button, juce::String name)
         testResult.setText(" ", juce::dontSendNotification);
         maxVolumeText.setVisible(false);
         targetVolume = db2Mag(volSlider.getMinimum());
-        envelope.startSweep();
+        envelope->startSweep();
     }
     else if ((button == &stopButton) && (stopButton.getToggleState()))
     {   
         testResult.setText(std::to_string(Mag2db(currentVolume)), juce::dontSendNotification);
         targetVolume = db2Mag(volSlider.getMinimum());
-        envelope.stopSweep();
+        envelope->stopSweep();
     } 
 }

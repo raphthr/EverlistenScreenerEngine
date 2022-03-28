@@ -1,5 +1,1 @@
-﻿  AudioStream.cpp
-  Main.cpp
-C:\Users\rapha\Coding\C++\TestProjects\SimpleSineGenerator\Source\Main.cpp(24,41): warning C4100: "commandLine": Unreferenzierter formaler Parameter
-C:\Users\rapha\Coding\C++\TestProjects\SimpleSineGenerator\Source\Main.cpp(46,53): warning C4100: "commandLine": Unreferenzierter formaler Parameter
-  SimpleSineGenerator_App.vcxproj -> C:\Users\rapha\Coding\C++\TestProjects\SimpleSineGenerator\Builds\VisualStudio2022\x64\Debug\App\SimpleSineGenerator.exe
+﻿  SimpleSineGenerator_App.vcxproj -> C:\Users\rapha\Coding\C++\TestProjects\SimpleSineGenerator\Builds\VisualStudio2022\x64\Debug\App\SimpleSineGenerator.exe

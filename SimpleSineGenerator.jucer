@@ -4,10 +4,10 @@
               addUsingNamespaceToJuceHeader="0" displaySplashScreen="1" jucerFormatVersion="1">
   <MAINGROUP id="MxF6DX" name="SimpleSineGenerator">
     <GROUP id="{88F6E48A-8B1A-1119-962C-03709FA5C89F}" name="Source">
-      <FILE id="Vpsaz0" name="SineOscillator.cpp" compile="1" resource="0"
-            file="Source/SineOscillator.cpp"/>
-      <FILE id="fmyxWB" name="SineOscillator.h" compile="0" resource="0"
-            file="Source/SineOscillator.h"/>
+      <FILE id="vPa40U" name="WaveTableOscillator.cpp" compile="1" resource="0"
+            file="Source/WaveTableOscillator.cpp"/>
+      <FILE id="MWnne5" name="WaveTableOscillator.h" compile="0" resource="0"
+            file="Source/WaveTableOscillator.h"/>
       <FILE id="k1AB1E" name="LinSweepGenerator.cpp" compile="1" resource="0"
             file="Source/LinSweepGenerator.cpp"/>
       <FILE id="lVT1Rl" name="LinSweepGenerator.h" compile="0" resource="0"

@@ -439,7 +439,7 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\Source\SineOscillator.cpp">
+    <ClCompile Include="..\..\Source\WaveTableOscillator.cpp">
       <Filter>SimpleSineGenerator\Source</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Source\LinSweepGenerator.cpp">
@@ -2553,7 +2553,7 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\Source\SineOscillator.h">
+    <ClInclude Include="..\..\Source\WaveTableOscillator.h">
       <Filter>SimpleSineGenerator\Source</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\LinSweepGenerator.h">

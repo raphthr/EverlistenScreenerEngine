@@ -13,18 +13,18 @@
 #include "LinSweepGenerator.h"
 
 LinSweepGenerator::LinSweepGenerator(double _fs, int _bufferSize, double _minValue,
-                                     double _maxValue, double _sweepTime)
-{
+                                     double _maxValue, double _sweepTime)                                                       
+{   
     fs = _fs;
     bufferSize = _bufferSize;
     minValue = _minValue;
     maxValue = _maxValue;
     sweepTime = _sweepTime;
     isActive = false;
+    isFinished = false;
     updateDelta();
 }
 
-LinSweepGenerator::LinSweepGenerator() {};
 LinSweepGenerator::~LinSweepGenerator() {};
 
 //==============================================================================
@@ -34,6 +34,7 @@ double LinSweepGenerator::getSweepTime() { return sweepTime; }
 double LinSweepGenerator::getFs() { return fs; }
 int LinSweepGenerator::getBufferSize() { return bufferSize; }
 bool LinSweepGenerator::getActive() { return isActive; }
+bool LinSweepGenerator::getFinished() { return isFinished; }
 
 double LinSweepGenerator::getNextValue(double currentValue) 
 {   
@@ -45,9 +46,12 @@ double LinSweepGenerator::getNextValue(double currentValue)
         return currentValue + deltaPerBlock;
     // or just maxValue to prevent overflows
     else
+    {   
+        isFinished = true;
         return maxValue;
+    }
 }
-
+/*
 double LinSweepGenerator::getNextValue(double currentValue, bool& isFinished)
 {
     if (!isActive)
@@ -56,14 +60,17 @@ double LinSweepGenerator::getNextValue(double currentValue, bool& isFinished)
         return currentValue + deltaPerBlock;
     else
     {
-        isFinished = true;
+        isA = true;
         return maxValue;
-    }
-        
-}
+    }     
+}*/
 
 //==============================================================================
-void LinSweepGenerator::startSweep() { isActive = true; }
+void LinSweepGenerator::startSweep() 
+{ 
+    isActive = true;
+    isFinished = false;
+}
 void LinSweepGenerator::stopSweep() { isActive = false; }
 
 void LinSweepGenerator::setMinValue(double newMin) 

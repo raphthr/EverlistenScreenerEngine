@@ -1,33 +1,32 @@
 #pragma once
 
-#define _USE_MATH_DEFINES 
-
 #include <JuceHeader.h>
-#include <cmath> 
 #include <string>
 #include "utility.h"
 #include "LinSweepGenerator.h"
-#include "SineOscillator.h"
+#include "WaveTableOscillator.h"
 
 //==============================================================================
 /*
     This component lives inside our window, and this is where you should put all
     your controls and content.
 */
+//==============================================================================
+
 class AudioStream : public juce::AudioAppComponent,
-                    public juce::Slider::Listener
+                    public juce::Slider::Listener,
+                    public juce::Timer
 {
 public:
-    //==============================================================================
+    
     AudioStream();
     ~AudioStream() override;
 
-    //==============================================================================
     void prepareToPlay(int samplesPerBlockExpected, double sampleRate) override;
     void getNextAudioBlock(const juce::AudioSourceChannelInfo& bufferToFill) override;
     void releaseResources() override;
 
-    //==============================================================================
+    void timerCallback() override;
     void paint(juce::Graphics& g) override;
     void resized() override;
 
@@ -38,19 +37,17 @@ public:
     enum class StereoChannel { LEFT = 0, RIGHT = 1 };
 
 private:
-    //==============================================================================
-    // Your private member variables go here...
-    double fs;
+
+    double fs, currentVolume, targetVolume;
     int bufferSize;
 
-    double currentVolume;
-    double targetVolume;
-
-
-    SineOscillator carrier;
-    SineOscillator modulator;
-    LinSweepGenerator envelope;
+    // store oscillator/sweep objects as pointers
+    // since they dont/cant get initialised in constructor
+    WaveTableOscillator* carrier;
+    WaveTableOscillator* modulator;
+    LinSweepGenerator* envelope;
     StereoChannel channel;
+    juce::AudioBuffer<double> sineTable;
 
     juce::Slider volSlider;
     juce::Label  volLabel;
@@ -74,7 +71,6 @@ private:
     juce::Label testResult;
     juce::Label testResultLabel;
 
-  
-
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(AudioStream)
 };
+

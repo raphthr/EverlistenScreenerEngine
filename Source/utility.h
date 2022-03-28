@@ -10,10 +10,14 @@
 
 #pragma once
 
-#include <math.h>
+#define _USE_MATH_DEFINES 
+#include <cmath>
+#include <JuceHeader.h>
 
 double db2Mag(double dbValue);
 float db2Mag(float dbValue);
 
 double Mag2db(double magnitude);
 float Mag2db(float magnitude);
+
+void createSineTable(juce::AudioBuffer<double>& sineTable, int tableSize);
