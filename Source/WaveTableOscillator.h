@@ -5,6 +5,10 @@
     Created: 24 Mar 2022 2:24:18pm
     Author:  Raphael Thurnher
 
+    This class is a simple wavetable oscillator. You can play any waveform
+    by providing the according wavetable. Call getNextSample() in your audio
+    callback function.
+
   ==============================================================================
 */
 

@@ -2,7 +2,7 @@
 
 AudioStream::AudioStream()
 {   
-    // initialize sliders and labels
+    // Initialize GUI elemements
     addAndMakeVisible(volSlider);
     volSlider.setRange(-96.0, -3.0, 3.0);
     volSlider.setValue(-18.0, juce::dontSendNotification);
@@ -80,21 +80,21 @@ AudioStream::AudioStream()
     // initialize wavetable
     createSineTable(sineTable, 1024);
     
-    // set initial window size
+    // Set initial window size
     setSize(800, 600);
 
-    // set 2 audio channels (stereo)
+    // Set 2 audio channels (stereo)
     setAudioChannels(0, 2);
 
-    // start timer for timer callback
+    // Start timer for timer callback
     startTimer(100);
 }
 
 AudioStream::~AudioStream()
 {
     // This shuts down the audio device and clears the audio source.
+    // Also free any heap memory here.
     shutdownAudio();
-    delete envelope, carrier, modulator;
 }
 
 //==============================================================================
@@ -111,42 +111,54 @@ void AudioStream::prepareToPlay(int samplesPerBlockExpected, double sampleRate)
     targetVolume = db2Mag(volSlider.getMinimum());
     channel = leftButton.getToggleState() ? StereoChannel::LEFT : StereoChannel::RIGHT;
 
-    carrier = new WaveTableOscillator(sampleRate, freqSlider.getValue(), sineTable);
-    modulator = new WaveTableOscillator(sampleRate, modSlider.getValue(), sineTable);
-    envelope = new LinSweepGenerator(sampleRate, samplesPerBlockExpected, volSlider.getMinimum(),
+    carrier = std::make_shared<WaveTableOscillator>(sampleRate, freqSlider.getValue(), sineTable);
+    modulator = std::make_shared<WaveTableOscillator>(sampleRate, modSlider.getValue(), sineTable);
+    envelope = std::make_shared<LinSweepGenerator>(sampleRate, samplesPerBlockExpected, volSlider.getMinimum(),
                                  volSlider.getValue(), timeSlider.getValue());
 }
 
 void AudioStream::getNextAudioBlock(const juce::AudioSourceChannelInfo& bufferToFill)
-{
+{   
+    // This is the time critical, real time audio callback function which gets called 
+    // periodically on the audio thread.
+    // Dont allocate any heap memory here (or do other operations that can take longer than
+    // expected). Since it is called from another thread than the GUI, watch out for
+    // race conditions and use atomic variables or a message queue if you need to exchange
+    // data with other threads.
+
     bufferToFill.clearActiveBufferRegion();
     auto* channelData = bufferToFill.buffer->getWritePointer((int) channel, bufferToFill.startSample);
     double carrierSample = 0.0;
     double modSample = 0.0;
 
+    // Call envelope->getNextValue() to generate next volume step for sweep.
+    // Also note that the volume is converted to db and then back to magnitude
+    // to generate a logarithmic sweep.
     targetVolume = db2Mag(envelope->getNextValue(Mag2db(targetVolume)));
 
+    // Volume has changed
     if (targetVolume != currentVolume)
     {   
         auto volumeIncrement = (targetVolume - currentVolume) / bufferToFill.numSamples;
 
         for (auto i = 0; i < bufferToFill.numSamples; ++i)
         {
-            // sample generation
+            // Sample generation
             carrierSample = carrier->getNextSample();
             modSample = modulator->getNextSample();
             channelData[i] = (float) (currentVolume * carrierSample * (modSample + 1.0) / 2.0);
 
-            // increment the volume for the next sample
+            // Increment the volume for the next sample to reduce clicking
             currentVolume += volumeIncrement;
         }
         currentVolume = targetVolume;
     }
+    // Volume stayed the same
     else
     {
         for (auto i = 0; i < bufferToFill.numSamples; ++i)
         {
-            // sample generation
+            // Sample generation
             carrierSample = carrier->getNextSample();
             modSample = modulator->getNextSample();
             channelData[i] = (float) (currentVolume * carrierSample * (modSample + 1.0) / 2.0);
@@ -163,15 +175,23 @@ void AudioStream::releaseResources()
 
 //==============================================================================
 void AudioStream::timerCallback()
-{
-    if (envelope->getFinished())
+{   
+    // This callback is called every 100ms (see constructor) on the message thread
+    // to decrease the load on the audio thread and because GUI elements should 
+    // not be called on the audio thread.
+
+    if (envelope->getFinished() && envelope->getActive())
+    {   
         maxVolumeText.setVisible(true);
+        stopButton.triggerClick();
+    }  
 }
 
 void AudioStream::paint(juce::Graphics& g)
 {
     // (Our component is opaque, so we must completely fill the background with a solid colour)
     // You can add your drawing code here!
+
     g.fillAll(getLookAndFeel().findColour(juce::ResizableWindow::backgroundColourId));
     g.setColour(juce::Colours::white);
     g.setFont(20.0f);
@@ -183,6 +203,7 @@ void AudioStream::resized()
     // This is called when the MainContentComponent is resized.
     // If you add any child components, this is where you should
     // update their positions.
+
     auto sliderLeft = 120;
     volSlider.setBounds(sliderLeft, 20, getWidth() - sliderLeft - 10, 20);
     freqSlider.setBounds(sliderLeft, 50, getWidth() - sliderLeft - 10, 20);
@@ -198,7 +219,9 @@ void AudioStream::resized()
 
 void AudioStream::sliderValueChanged(juce::Slider* slider)
 {   
-    //maybe check if fs > 0.0 to see if app is currently running
+    // This function is called every time a slider is moved.
+    // Maybe check if fs > 0.0 to see if app is currently running.
+
     if (slider == &volSlider)
         envelope->setMaxValue(volSlider.getValue());
     else if (slider == &freqSlider)
@@ -211,6 +234,10 @@ void AudioStream::sliderValueChanged(juce::Slider* slider)
 
 void AudioStream::updateToggleState(juce::Button* button, juce::String name)
 {   
+    // This function is called every time a button is pressed.
+    // You also need to check the toggle state of the button, 
+    // not only the press event.
+
     if ((button == &leftButton) || (button == &rightButton))
         channel = leftButton.getToggleState() ? StereoChannel::LEFT : StereoChannel::RIGHT;
 

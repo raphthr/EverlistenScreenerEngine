@@ -5,7 +5,7 @@
     Created: 22 Mar 2022 10:06:03am
     Author:  Raphael Thurnher
 
-    This is the implementation of LinSweepGenerator.h
+    This is the implementation of LinSweepGenerator.
 
   ==============================================================================
 */
@@ -38,7 +38,7 @@ bool LinSweepGenerator::getFinished() { return isFinished; }
 
 double LinSweepGenerator::getNextValue(double currentValue) 
 {   
-    // return currentValue back if it is not active
+    // Return currentValue back if generator is not active
     if (!isActive)
         return currentValue;
     // add delta for linear increase
@@ -51,19 +51,6 @@ double LinSweepGenerator::getNextValue(double currentValue)
         return maxValue;
     }
 }
-/*
-double LinSweepGenerator::getNextValue(double currentValue, bool& isFinished)
-{
-    if (!isActive)
-        return currentValue;
-    else if (currentValue < maxValue)
-        return currentValue + deltaPerBlock;
-    else
-    {
-        isA = true;
-        return maxValue;
-    }     
-}*/
 
 //==============================================================================
 void LinSweepGenerator::startSweep() 
@@ -71,7 +58,10 @@ void LinSweepGenerator::startSweep()
     isActive = true;
     isFinished = false;
 }
-void LinSweepGenerator::stopSweep() { isActive = false; }
+void LinSweepGenerator::stopSweep() 
+{
+    isActive = false; 
+}
 
 void LinSweepGenerator::setMinValue(double newMin) 
 {
@@ -102,9 +92,9 @@ void LinSweepGenerator::setBufferSize(int newBufferSize)
     updateDelta();
 }
 
+// Call this function if any parameter has changed
+// to always get the correct delta.
 void LinSweepGenerator::updateDelta()
 {   
-    // call this function if any parameter has changed
-    // to always get the correct delta
     deltaPerBlock = (maxValue - minValue) / (sweepTime / (bufferSize / fs));
 }

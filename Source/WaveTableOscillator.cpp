@@ -4,6 +4,7 @@
     WaveTableOscillator.cpp
     Created: 24 Mar 2022 2:24:18pm
     Author:  Raphael Thurnher
+    This is the implementation of WaveTableOscillator.
 
   ==============================================================================
 */
@@ -32,6 +33,7 @@ double WaveTableOscillator::getNextSample()
     auto value0 = table[index0];
     auto value1 = table[index1];
 
+    // Linear interpolation to reduce SNR.
     auto currentSample = value0 + frac * (value1 - value0);
 
     currentIndex = fmod(currentIndex + tableDelta, (double)tableSize);
@@ -57,6 +59,7 @@ void WaveTableOscillator::setFrequency(double newFrequency)
     updateTableDelta();
 }
 
+// Call this function every time fs or frequency is changed.
 void WaveTableOscillator::updateTableDelta()
 {
     tableDelta = frequency * (double) tableSize / fs;

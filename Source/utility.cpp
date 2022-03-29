@@ -5,6 +5,8 @@
     Created: 17 Mar 2022 12:42:00pm
     Author:  Raphael Thurnher
 
+    This is the implementation of utility.h
+
   ==============================================================================
 */
 

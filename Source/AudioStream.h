@@ -2,6 +2,7 @@
 
 #include <JuceHeader.h>
 #include <string>
+#include <memory>
 #include "utility.h"
 #include "LinSweepGenerator.h"
 #include "WaveTableOscillator.h"
@@ -41,11 +42,12 @@ private:
     double fs, currentVolume, targetVolume;
     int bufferSize;
 
-    // store oscillator/sweep objects as pointers
-    // since they dont/cant get initialised in constructor
-    WaveTableOscillator* carrier;
-    WaveTableOscillator* modulator;
-    LinSweepGenerator* envelope;
+    // Store oscillator/sweep objects as pointers,
+    // since they dont/cant get initialised @ construction time.
+
+    std::shared_ptr<WaveTableOscillator> carrier;
+    std::shared_ptr<WaveTableOscillator> modulator;
+    std::shared_ptr<LinSweepGenerator> envelope;
     StereoChannel channel;
     juce::AudioBuffer<double> sineTable;
 

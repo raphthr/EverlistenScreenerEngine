@@ -1,4 +1,10 @@
-﻿  utility.cpp
+﻿  AudioStream.cpp
+  LinSweepGenerator.cpp
+  Main.cpp
+  WaveTableOscillator.cpp
+  utility.cpp
+C:\Users\rapha\Coding\C++\TestProjects\SimpleSineGenerator\Source\Main.cpp(24,41): warning C4100: "commandLine": Unreferenzierter formaler Parameter
+C:\Users\rapha\Coding\C++\TestProjects\SimpleSineGenerator\Source\Main.cpp(46,53): warning C4100: "commandLine": Unreferenzierter formaler Parameter
   Code wird generiert.
   Codegenerierung ist abgeschlossen.
   SimpleSineGenerator_App.vcxproj -> C:\Users\rapha\Coding\C++\TestProjects\SimpleSineGenerator\Builds\VisualStudio2022\x64\Release\App\SimpleSineGenerator.exe
