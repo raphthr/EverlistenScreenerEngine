@@ -1,0 +1,21 @@
+﻿  AudioStream.cpp
+  CustomAudioCallback.cpp
+  LinSweepGenerator.cpp
+  Main.cpp
+  WaveTableOscillator.cpp
+  include_juce_audio_basics.cpp
+  include_juce_audio_devices.cpp
+  include_juce_audio_formats.cpp
+  include_juce_core.cpp
+C:\Users\rapha\Coding\C++\EverlistenScreenerEngine\Source\Main.cpp(14,27): warning C4100: "argv": Unreferenzierter formaler Parameter
+C:\Users\rapha\Coding\C++\EverlistenScreenerEngine\Source\AudioStream.cpp(42,69): warning C4100: "sampleRate": Unreferenzierter formaler Parameter
+C:\Users\rapha\Coding\C++\EverlistenScreenerEngine\Source\AudioStream.cpp(42,37): warning C4100: "samplesPerBlockExpected": Unreferenzierter formaler Parameter
+C:\Users\rapha\Coding\C++\EverlistenScreenerEngine\Source\Main.cpp(14,15): warning C4100: "argc": Unreferenzierter formaler Parameter
+C:\Users\rapha\Coding\C++\EverlistenScreenerEngine\Source\AudioStream.cpp(49,73): warning C4100: "bufferToFill": Unreferenzierter formaler Parameter
+C:\Users\rapha\Coding\C++\EverlistenScreenerEngine\Source\CustomAudioCallback.cpp(31,9): warning C4100: "numOutputChannels": Unreferenzierter formaler Parameter
+C:\Users\rapha\Coding\C++\EverlistenScreenerEngine\Source\CustomAudioCallback.cpp(29,9): warning C4100: "numInputChannels": Unreferenzierter formaler Parameter
+C:\Users\rapha\Coding\C++\EverlistenScreenerEngine\Source\CustomAudioCallback.cpp(28,63): warning C4100: "inputChannelData": Unreferenzierter formaler Parameter
+C:\Users\rapha\Coding\C++\EverlistenScreenerEngine\Source\CustomAudioCallback.cpp(76,72): warning C4100: "device": Unreferenzierter formaler Parameter
+  include_juce_data_structures.cpp
+  include_juce_events.cpp
+  NoGUITest_ConsoleApp.vcxproj -> C:\Users\rapha\Coding\C++\EverlistenScreenerEngine\Builds\VisualStudio2022\x64\Debug\ConsoleApp\NoGUITest.exe

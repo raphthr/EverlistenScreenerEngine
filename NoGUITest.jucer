@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<JUCERPROJECT id="paNRZy" name="NoGUITest" projectType="consoleapp" useAppConfig="0"
+              addUsingNamespaceToJuceHeader="0" displaySplashScreen="1" jucerFormatVersion="1">
+  <MAINGROUP id="rYd5rw" name="NoGUITest">
+    <GROUP id="{D2D4D996-7479-3E56-3C9E-3596E1413713}" name="Source">
+      <FILE id="UDEg33" name="AudioStream.cpp" compile="1" resource="0" file="Source/AudioStream.cpp"/>
+      <FILE id="roTMIM" name="AudioStream.h" compile="0" resource="0" file="Source/AudioStream.h"/>
+      <FILE id="N2cFqm" name="CustomAudioCallback.cpp" compile="1" resource="0"
+            file="Source/CustomAudioCallback.cpp"/>
+      <FILE id="ALbjUx" name="CustomAudioCallback.h" compile="0" resource="0"
+            file="Source/CustomAudioCallback.h"/>
+      <FILE id="By82QB" name="LinSweepGenerator.cpp" compile="1" resource="0"
+            file="Source/LinSweepGenerator.cpp"/>
+      <FILE id="dp9Luq" name="LinSweepGenerator.h" compile="0" resource="0"
+            file="Source/LinSweepGenerator.h"/>
+      <FILE id="d35ZmC" name="Main.cpp" compile="1" resource="0" file="Source/Main.cpp"/>
+      <FILE id="hy2Vt1" name="utility.h" compile="0" resource="0" file="Source/utility.h"/>
+      <FILE id="mtBSAh" name="WaveTableOscillator.cpp" compile="1" resource="0"
+            file="Source/WaveTableOscillator.cpp"/>
+      <FILE id="C8KRcF" name="WaveTableOscillator.h" compile="0" resource="0"
+            file="Source/WaveTableOscillator.h"/>
+    </GROUP>
+  </MAINGROUP>
+  <JUCEOPTIONS JUCE_STRICT_REFCOUNTEDPOINTER="1"/>
+  <EXPORTFORMATS>
+    <VS2022 targetFolder="Builds/VisualStudio2022">
+      <CONFIGURATIONS>
+        <CONFIGURATION isDebug="1" name="Debug" targetName="NoGUITest"/>
+        <CONFIGURATION isDebug="0" name="Release" targetName="NoGUITest"/>
+      </CONFIGURATIONS>
+      <MODULEPATHS>
+        <MODULEPATH id="juce_audio_basics" path="../../../../../../JUCE/modules"/>
+        <MODULEPATH id="juce_audio_devices" path="../../../../../../JUCE/modules"/>
+        <MODULEPATH id="juce_audio_formats" path="../../../../../../JUCE/modules"/>
+        <MODULEPATH id="juce_core" path="../../../../../../JUCE/modules"/>
+        <MODULEPATH id="juce_data_structures" path="../../../../../../JUCE/modules"/>
+        <MODULEPATH id="juce_events" path="../../../../../../JUCE/modules"/>
+      </MODULEPATHS>
+    </VS2022>
+  </EXPORTFORMATS>
+  <MODULES>
+    <MODULE id="juce_audio_basics" showAllCode="1" useLocalCopy="0" useGlobalPath="1"/>
+    <MODULE id="juce_audio_devices" showAllCode="1" useLocalCopy="0" useGlobalPath="1"/>
+    <MODULE id="juce_audio_formats" showAllCode="1" useLocalCopy="0" useGlobalPath="1"/>
+    <MODULE id="juce_core" showAllCode="1" useLocalCopy="0" useGlobalPath="1"/>
+    <MODULE id="juce_data_structures" showAllCode="1" useLocalCopy="0" useGlobalPath="1"/>
+    <MODULE id="juce_events" showAllCode="1" useLocalCopy="0" useGlobalPath="1"/>
+  </MODULES>
+</JUCERPROJECT>

@@ -18,8 +18,8 @@ class LinSweepGenerator
 {
 public:
     //==============================================================================
-    LinSweepGenerator(double _fs, int _bufferSize, double _minValue, 
-                      double _maxValue, double _sweepTime);
+    LinSweepGenerator(double _fs, int _bufferSize, double _minValue,
+        double _maxValue, double _sweepTime);
     ~LinSweepGenerator();
 
     //==============================================================================
@@ -31,8 +31,8 @@ public:
     int getBufferSize();
     bool getActive();
     bool getFinished();
-    
-    
+
+
     //==============================================================================
     void startSweep();
     void stopSweep();

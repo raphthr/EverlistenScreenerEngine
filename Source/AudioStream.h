@@ -3,9 +3,11 @@
 #include <JuceHeader.h>
 #include <string>
 #include <memory>
+#include <iostream>
 #include "utility.h"
 #include "LinSweepGenerator.h"
 #include "WaveTableOscillator.h"
+#include "CustomAudioCallback.h"
 
 //==============================================================================
 /*
@@ -14,65 +16,70 @@
 */
 //==============================================================================
 
-class AudioStream : public juce::AudioAppComponent,
-                    public juce::Slider::Listener,
-                    public juce::Timer
+
+
+class AudioStream : public juce::Timer
 {
 public:
+
     
+
     AudioStream();
-    ~AudioStream() override;
+    ~AudioStream();
 
-    void prepareToPlay(int samplesPerBlockExpected, double sampleRate) override;
-    void getNextAudioBlock(const juce::AudioSourceChannelInfo& bufferToFill) override;
-    void releaseResources() override;
-
+    void prepareToPlay(int samplesPerBlockExpected, double sampleRate);
+    void getNextAudioBlock(const juce::AudioSourceChannelInfo& bufferToFill);
+    void releaseResources();
     void timerCallback() override;
-    void paint(juce::Graphics& g) override;
-    void resized() override;
-
-    void sliderValueChanged(juce::Slider* slider) override;
-    void updateToggleState(juce::Button* button, juce::String name);
-
-    enum RadioButtonIds { StereoButtons = 1001, StartStopButtons = 1002 };
-    enum class StereoChannel { LEFT = 0, RIGHT = 1 };
+    void startTest(StereoChannel channel, double testFrequency);
+    double stopTest();
 
 private:
 
-    double fs, currentVolume, targetVolume;
+    double fs;
     int bufferSize;
 
-    // Store oscillator/sweep objects as pointers,
-    // since they dont/cant get initialised @ construction time.
-
-    std::shared_ptr<WaveTableOscillator> carrier;
-    std::shared_ptr<WaveTableOscillator> modulator;
-    std::shared_ptr<LinSweepGenerator> envelope;
-    StereoChannel channel;
+    juce::AudioDeviceManager deviceManager;
     juce::AudioBuffer<double> sineTable;
 
-    juce::Slider volSlider;
-    juce::Label  volLabel;
-
-    juce::Slider freqSlider;
-    juce::Label  freqLabel;
-
-    juce::Slider modSlider;
-    juce::Label  modLabel;
-
-    juce::Slider timeSlider;
-    juce::Label  timeLabel;
-
-    juce::ToggleButton leftButton{ "Left" },
-                       rightButton{ "Right" };
-
-    juce::ToggleButton startButton{ "Start" },
-                       stopButton{ "Stop" };
-
-    juce::Label maxVolumeText;
-    juce::Label testResult;
-    juce::Label testResultLabel;
+    std::shared_ptr<IOscillator> carrier;
+    std::shared_ptr<IOscillator> modulator;
+    std::shared_ptr<LinSweepGenerator> envelope;
+    CustomAudioCallback* audioCallback;
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(AudioStream)
 };
+
+//==============================================================================
+//==============================================================================
+
+/*class CustomAudioCallback : public juce::AudioIODeviceCallback
+{   
+public:
+    CustomAudioCallback(std::shared_ptr<IOscillator> _carrier, 
+                        std::shared_ptr<IOscillator> _modulator, 
+                        std::shared_ptr<LinSweepGenerator> _envelope);
+
+    ~CustomAudioCallback();
+    void audioDeviceIOCallback(const float** inputChannelData,
+                               int numInputChannels,
+                               float** outputChannelData,
+                               int numOutputChannels,
+                               int numSamples) override;
+
+    void audioDeviceAboutToStart(juce::AudioIODevice* device) override;
+    void audioDeviceStopped() override;
+    void setChannel(StereoChannel newChannel);
+    void setTargetVolume(double newTargetVolume);
+
+    double getCurrentVolume();
+
+private:
+    std::shared_ptr<IOscillator> carrier;
+    std::shared_ptr<IOscillator> modulator;
+    std::shared_ptr<LinSweepGenerator> envelope;
+
+    double currentVolume, targetVolume;
+    StereoChannel channel;
+};*/
 

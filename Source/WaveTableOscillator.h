@@ -17,10 +17,25 @@
 #include <JuceHeader.h>
 #include <cmath>
 
-
-class WaveTableOscillator
+class IOscillator
 {
 public:
+
+    virtual double getNextSample() = 0;
+    virtual double getFs() = 0;
+    virtual double getFrequency() = 0;
+
+    virtual void setFs(double newFs) = 0;
+    virtual void setFrequency(double newFrequency) = 0; 
+};
+
+//==============================================================================
+//==============================================================================
+
+class WaveTableOscillator : public IOscillator
+{
+public:
+
     WaveTableOscillator(double _fs, double _frequency, const juce::AudioBuffer<double>& _waveTable);
     ~WaveTableOscillator();
 
@@ -33,6 +48,7 @@ public:
     void setFrequency(double newFrequency);
 
 private:
+
     void updateTableDelta();
 
     const juce::AudioBuffer<double>& waveTable;
