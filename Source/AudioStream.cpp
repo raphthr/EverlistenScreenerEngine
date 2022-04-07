@@ -11,7 +11,9 @@
 #include "AudioStream.h"
 
 AudioStream::AudioStream()
-{
+{   
+    juce::initialiseJuce_GUI();
+
     deviceManager.initialise(0, 2, nullptr, true);
     auto deviceSetup = deviceManager.getAudioDeviceSetup();
     fs = deviceSetup.sampleRate;
@@ -25,9 +27,6 @@ AudioStream::AudioStream()
     audioCallback = new CustomAudioCallback(carrier, modulator, envelope);
 
     deviceManager.addAudioCallback(audioCallback);
-    
-    // Start timer for timer callback
-    startTimer(100);
 }
 
 AudioStream::~AudioStream()
@@ -36,6 +35,7 @@ AudioStream::~AudioStream()
     // Also free any heap memory here.
     deviceManager.removeAudioCallback(audioCallback);
     delete audioCallback;
+    juce::shutdownJuce_GUI();
 }
 
 //==============================================================================
@@ -56,7 +56,7 @@ void AudioStream::releaseResources()
 }
 
 //==============================================================================
-void AudioStream::timerCallback()
+void AudioStream::isAtMaxVolume()
 {
     // This callback is called every 100ms (see constructor) on the message thread
     // to decrease the load on the audio thread and because GUI elements should 

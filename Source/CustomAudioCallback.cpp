@@ -3,7 +3,7 @@
 
     CustomAudioCallback.cpp
     Created: 31 Mar 2022 1:56:13pm
-    Author:  rapha
+    Author:  Raphael Thurnher
 
   ==============================================================================
 */
@@ -26,10 +26,10 @@ CustomAudioCallback::CustomAudioCallback(std::shared_ptr<IOscillator> _carrier,
 CustomAudioCallback::~CustomAudioCallback() {}
 
 void CustomAudioCallback::audioDeviceIOCallback(const float** inputChannelData,
-    int numInputChannels,
-    float** outputChannelData,
-    int numOutputChannels,
-    int numSamples)
+                                                int numInputChannels,
+                                                float** outputChannelData,
+                                                int numOutputChannels,
+                                                int numSamples)
 {
     // This is the time critical, real time audio callback function which gets called 
     // periodically on the audio thread.

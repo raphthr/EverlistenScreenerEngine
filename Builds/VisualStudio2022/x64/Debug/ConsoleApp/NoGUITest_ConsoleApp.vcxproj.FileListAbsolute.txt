@@ -1,2 +1,3 @@
 C:\Users\rapha\Coding\C++\TestProjects\NoGUITest\Builds\VisualStudio2022\x64\Debug\ConsoleApp\NoGUITest.exe
 C:\Users\rapha\Coding\C++\EverlistenScreenerEngine\Builds\VisualStudio2022\x64\Debug\ConsoleApp\NoGUITest.exe
+C:\Users\rapha\Coding\C++\JUCEProjects\EverlistenScreenerEngine\Builds\VisualStudio2022\x64\Debug\ConsoleApp\NoGUITest.exe
