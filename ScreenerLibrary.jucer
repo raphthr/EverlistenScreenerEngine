@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<JUCERPROJECT id="yBH4D4" name="ScreenerLibrary" projectType="library" useAppConfig="0"
+              addUsingNamespaceToJuceHeader="0" displaySplashScreen="1" jucerFormatVersion="1">
+  <MAINGROUP id="JoEXov" name="ScreenerLibrary">
+    <GROUP id="{053BEDE2-FAC3-0029-C7A5-87E38F2A5667}" name="Source">
+      <FILE id="YChn2b" name="AudioCallback.cpp" compile="1" resource="0"
+            file="Source/AudioCallback.cpp"/>
+      <FILE id="PVlWcM" name="AudioCallback.h" compile="0" resource="0" file="Source/AudioCallback.h"/>
+      <FILE id="gtRwUE" name="LinSweepGenerator.cpp" compile="1" resource="0"
+            file="Source/LinSweepGenerator.cpp"/>
+      <FILE id="sosHdD" name="LinSweepGenerator.h" compile="0" resource="0"
+            file="Source/LinSweepGenerator.h"/>
+      <FILE id="rgxvzn" name="EngineCore.cpp" compile="1" resource="0" file="Source/EngineCore.cpp"/>
+      <FILE id="LJ41uK" name="EngineCore.h" compile="0" resource="0" file="Source/EngineCore.h"/>
+      <FILE id="THEwjy" name="utility.h" compile="0" resource="0" file="Source/utility.h"/>
+      <FILE id="raUxNC" name="Oscillator.cpp" compile="1" resource="0" file="Source/Oscillator.cpp"/>
+      <FILE id="uX1Kx6" name="Oscillator.h" compile="0" resource="0" file="Source/Oscillator.h"/>
+    </GROUP>
+  </MAINGROUP>
+  <JUCEOPTIONS JUCE_STRICT_REFCOUNTEDPOINTER="1"/>
+  <EXPORTFORMATS>
+    <VS2022 targetFolder="Builds/VisualStudio2022">
+      <CONFIGURATIONS>
+        <CONFIGURATION isDebug="1" name="Debug" targetName="ScreenerLibrary"/>
+        <CONFIGURATION isDebug="0" name="Release" targetName="ScreenerLibrary"/>
+      </CONFIGURATIONS>
+      <MODULEPATHS>
+        <MODULEPATH id="juce_audio_basics" path="../../../../../../JUCE/modules"/>
+        <MODULEPATH id="juce_audio_devices" path="../../../../../../JUCE/modules"/>
+        <MODULEPATH id="juce_core" path="../../../../../../JUCE/modules"/>
+        <MODULEPATH id="juce_events" path="../../../../../../JUCE/modules"/>
+      </MODULEPATHS>
+    </VS2022>
+    <XCODE_IPHONE targetFolder="Builds/iOS">
+      <CONFIGURATIONS>
+        <CONFIGURATION isDebug="1" name="Debug" targetName="ScreenerLibrary"/>
+        <CONFIGURATION isDebug="0" name="Release" targetName="ScreenerLibrary"/>
+      </CONFIGURATIONS>
+      <MODULEPATHS>
+        <MODULEPATH id="juce_audio_basics" path="../../../../../../JUCE/modules"/>
+        <MODULEPATH id="juce_audio_devices" path="../../../../../../JUCE/modules"/>
+        <MODULEPATH id="juce_core" path="../../../../../../JUCE/modules"/>
+        <MODULEPATH id="juce_events" path="../../../../../../JUCE/modules"/>
+      </MODULEPATHS>
+    </XCODE_IPHONE>
+    <XCODE_MAC targetFolder="Builds/MacOSX">
+      <CONFIGURATIONS>
+        <CONFIGURATION isDebug="1" name="Debug" targetName="ScreenerLibrary"/>
+        <CONFIGURATION isDebug="0" name="Release" targetName="ScreenerLibrary"/>
+      </CONFIGURATIONS>
+      <MODULEPATHS>
+        <MODULEPATH id="juce_audio_basics" path="../../../../../../JUCE/modules"/>
+        <MODULEPATH id="juce_audio_devices" path="../../../../../../JUCE/modules"/>
+        <MODULEPATH id="juce_core" path="../../../../../../JUCE/modules"/>
+        <MODULEPATH id="juce_events" path="../../../../../../JUCE/modules"/>
+      </MODULEPATHS>
+    </XCODE_MAC>
+  </EXPORTFORMATS>
+  <MODULES>
+    <MODULE id="juce_audio_basics" showAllCode="1" useLocalCopy="0" useGlobalPath="1"/>
+    <MODULE id="juce_audio_devices" showAllCode="1" useLocalCopy="0" useGlobalPath="1"/>
+    <MODULE id="juce_core" showAllCode="1" useLocalCopy="0" useGlobalPath="1"/>
+    <MODULE id="juce_events" showAllCode="1" useLocalCopy="0" useGlobalPath="1"/>
+  </MODULES>
+</JUCERPROJECT>

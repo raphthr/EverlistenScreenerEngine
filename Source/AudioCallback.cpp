@@ -11,22 +11,22 @@
 #include "AudioCallback.h"
 
 AudioCallback::AudioCallback(std::shared_ptr<IOscillator> _carrier,
-    std::shared_ptr<IOscillator> _modulator,
-    std::shared_ptr<LinSweepGenerator> _envelope)
-    : juce::AudioIODeviceCallback(),
-    carrier(_carrier), modulator(_modulator),
-    envelope(_envelope),
-    currentVolume(juce::Decibels::decibelsToGain<double>(MIN_VOL)),
-    targetVolume(juce::Decibels::decibelsToGain<double>(MIN_VOL)),
-    channel(StereoChannel::LEFT) {}
+                             std::shared_ptr<IOscillator> _modulator,
+                             std::shared_ptr<LinSweepGenerator> _envelope)
+                             : juce::AudioIODeviceCallback(),
+                             carrier(_carrier), modulator(_modulator), 
+                             envelope(_envelope),
+                             currentVolume(juce::Decibels::decibelsToGain<double>(MIN_VOL)),
+                             targetVolume(juce::Decibels::decibelsToGain<double>(MIN_VOL)),
+                             channel(StereoChannel::LEFT) {}
 
 AudioCallback::~AudioCallback() {}
 
 void AudioCallback::audioDeviceIOCallback(const float** inputChannelData,
-    int numInputChannels,
-    float** outputChannelData,
-    int numOutputChannels,
-    int numSamples)
+                                          int numInputChannels,
+                                          float** outputChannelData,
+                                          int numOutputChannels,
+                                          int numSamples)
 {
     // This is the time critical, real time audio callback function which gets called 
     // periodically on the audio thread.

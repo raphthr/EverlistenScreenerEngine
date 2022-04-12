@@ -11,12 +11,12 @@
 
 #include "Oscillator.h"
 
-WaveTableOscillator::WaveTableOscillator(double _fs, double _frequency,
-    const juce::AudioBuffer<double>& _waveTable)
-    : waveTable(_waveTable), fs(_fs),
-    frequency(_frequency),
-    tableSize(waveTable.getNumSamples() - 1),
-    currentIndex(0.0), tableDelta(0.0)
+WaveTableOscillator::WaveTableOscillator(double _fs, double _frequency, 
+                                         const juce::AudioBuffer<double>& _waveTable)
+                                         : waveTable(_waveTable), fs(_fs), 
+                                         frequency(_frequency), 
+                                         tableSize(waveTable.getNumSamples() - 1),
+                                         currentIndex(0.0), tableDelta(0.0)
 {
     jassert(waveTable.getNumChannels() == 1);
     updateTableDelta();
