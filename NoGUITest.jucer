@@ -4,22 +4,19 @@
               addUsingNamespaceToJuceHeader="0" displaySplashScreen="1" jucerFormatVersion="1">
   <MAINGROUP id="rYd5rw" name="NoGUITest">
     <GROUP id="{D2D4D996-7479-3E56-3C9E-3596E1413713}" name="Source">
-      <FILE id="UDEg33" name="AudioStream.cpp" compile="1" resource="0" file="Source/AudioStream.cpp"/>
-      <FILE id="roTMIM" name="AudioStream.h" compile="0" resource="0" file="Source/AudioStream.h"/>
-      <FILE id="N2cFqm" name="CustomAudioCallback.cpp" compile="1" resource="0"
-            file="Source/CustomAudioCallback.cpp"/>
-      <FILE id="ALbjUx" name="CustomAudioCallback.h" compile="0" resource="0"
-            file="Source/CustomAudioCallback.h"/>
+      <FILE id="UDEg33" name="EngineCore.cpp" compile="1" resource="0" file="Source/EngineCore.cpp"/>
+      <FILE id="roTMIM" name="EngineCore.h" compile="0" resource="0" file="Source/EngineCore.h"/>
+      <FILE id="N2cFqm" name="AudioCallback.cpp" compile="1" resource="0"
+            file="Source/AudioCallback.cpp"/>
+      <FILE id="ALbjUx" name="AudioCallback.h" compile="0" resource="0" file="Source/AudioCallback.h"/>
       <FILE id="By82QB" name="LinSweepGenerator.cpp" compile="1" resource="0"
             file="Source/LinSweepGenerator.cpp"/>
       <FILE id="dp9Luq" name="LinSweepGenerator.h" compile="0" resource="0"
             file="Source/LinSweepGenerator.h"/>
       <FILE id="d35ZmC" name="Main.cpp" compile="1" resource="0" file="Source/Main.cpp"/>
       <FILE id="hy2Vt1" name="utility.h" compile="0" resource="0" file="Source/utility.h"/>
-      <FILE id="mtBSAh" name="WaveTableOscillator.cpp" compile="1" resource="0"
-            file="Source/WaveTableOscillator.cpp"/>
-      <FILE id="C8KRcF" name="WaveTableOscillator.h" compile="0" resource="0"
-            file="Source/WaveTableOscillator.h"/>
+      <FILE id="mtBSAh" name="Oscillator.cpp" compile="1" resource="0" file="Source/Oscillator.cpp"/>
+      <FILE id="C8KRcF" name="Oscillator.h" compile="0" resource="0" file="Source/Oscillator.h"/>
     </GROUP>
   </MAINGROUP>
   <JUCEOPTIONS JUCE_STRICT_REFCOUNTEDPOINTER="1"/>

@@ -1,4 +1,4 @@
 ﻿  Main.cpp
-C:\Users\rapha\Coding\C++\JUCEProjects\EverlistenScreenerEngine\Source\Main.cpp(14,27): warning C4100: "argv": Unreferenzierter formaler Parameter
-C:\Users\rapha\Coding\C++\JUCEProjects\EverlistenScreenerEngine\Source\Main.cpp(14,15): warning C4100: "argc": Unreferenzierter formaler Parameter
+C:\Users\rapha\Coding\C++\JUCEProjects\EverlistenScreenerEngine\Source\Main.cpp(5,27): warning C4100: "argv": Unreferenzierter formaler Parameter
+C:\Users\rapha\Coding\C++\JUCEProjects\EverlistenScreenerEngine\Source\Main.cpp(5,15): warning C4100: "argc": Unreferenzierter formaler Parameter
   NoGUITest_ConsoleApp.vcxproj -> C:\Users\rapha\Coding\C++\JUCEProjects\EverlistenScreenerEngine\Builds\VisualStudio2022\x64\Debug\ConsoleApp\NoGUITest.exe

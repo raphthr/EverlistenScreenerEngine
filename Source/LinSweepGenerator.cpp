@@ -14,14 +14,11 @@
 
 LinSweepGenerator::LinSweepGenerator(double _fs, int _bufferSize, double _minValue,
     double _maxValue, double _sweepTime)
+    : fs(_fs), bufferSize(_bufferSize),
+    minValue(_minValue), maxValue(_maxValue),
+    sweepTime(_sweepTime), isActive(false),
+    isFinished(false)
 {
-    fs = _fs;
-    bufferSize = _bufferSize;
-    minValue = _minValue;
-    maxValue = _maxValue;
-    sweepTime = _sweepTime;
-    isActive = false;
-    isFinished = false;
     updateDelta();
 }
 

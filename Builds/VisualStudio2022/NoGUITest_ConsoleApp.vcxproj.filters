@@ -235,10 +235,10 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\Source\AudioStream.cpp">
+    <ClCompile Include="..\..\Source\EngineCore.cpp">
       <Filter>NoGUITest\Source</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Source\CustomAudioCallback.cpp">
+    <ClCompile Include="..\..\Source\AudioCallback.cpp">
       <Filter>NoGUITest\Source</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Source\LinSweepGenerator.cpp">
@@ -247,7 +247,7 @@
     <ClCompile Include="..\..\Source\Main.cpp">
       <Filter>NoGUITest\Source</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Source\WaveTableOscillator.cpp">
+    <ClCompile Include="..\..\Source\Oscillator.cpp">
       <Filter>NoGUITest\Source</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\..\..\..\..\..\JUCE\modules\juce_audio_basics\buffers\juce_AudioChannelSet.cpp">
@@ -1233,10 +1233,10 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\Source\AudioStream.h">
+    <ClInclude Include="..\..\Source\EngineCore.h">
       <Filter>NoGUITest\Source</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Source\CustomAudioCallback.h">
+    <ClInclude Include="..\..\Source\AudioCallback.h">
       <Filter>NoGUITest\Source</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\LinSweepGenerator.h">
@@ -1245,7 +1245,7 @@
     <ClInclude Include="..\..\Source\utility.h">
       <Filter>NoGUITest\Source</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Source\WaveTableOscillator.h">
+    <ClInclude Include="..\..\Source\Oscillator.h">
       <Filter>NoGUITest\Source</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\..\..\..\..\..\JUCE\modules\juce_audio_basics\audio_play_head\juce_AudioPlayHead.h">
