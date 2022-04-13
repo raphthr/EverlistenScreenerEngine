@@ -21,7 +21,7 @@
 class IOscillator
 {
 public:
-
+    virtual ~IOscillator() {};
     virtual double getNextSample() = 0;
     virtual double getFs() = 0;
     virtual double getFrequency() = 0;
