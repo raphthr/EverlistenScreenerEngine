@@ -26,10 +26,10 @@ public:
 
     ~AudioCallback();
     void audioDeviceIOCallback(const float** inputChannelData,
-        int numInputChannels,
-        float** outputChannelData,
-        int numOutputChannels,
-        int numSamples) override;
+                               int numInputChannels,
+                               float** outputChannelData,
+                               int numOutputChannels,
+                               int numSamples) override;
 
     void audioDeviceAboutToStart(juce::AudioIODevice* device) override;
     void audioDeviceStopped() override;

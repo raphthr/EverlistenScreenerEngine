@@ -27,6 +27,9 @@ EngineCore::EngineCore()
 
     audioCallback = new AudioCallback(carrier, modulator, envelope);
     deviceManager.addAudioCallback(audioCallback);
+
+    startTimer(100);
+    std::cout << "DBG: Is timer running: " << isTimerRunning() << std::endl;
 }
 
 EngineCore::~EngineCore()
@@ -35,16 +38,21 @@ EngineCore::~EngineCore()
     // Also free any heap memory here.
     deviceManager.removeAudioCallback(audioCallback);
     delete audioCallback;
+    audioCallback = nullptr;
     juce::shutdownJuce_GUI();
 }
 
 //==============================================================================
+/*
+    these functions are no longer needed since the audio devices and callbacks
+    are now in their own classes
 void EngineCore::prepareToPlay(int samplesPerBlockExpected, double sampleRate)
 {
     // This function is called once (on the audio thread)
     // before audio playback starts.
     // For more details, see the help for AudioProcessor::prepareToPlay()
 }
+
 
 void EngineCore::getNextAudioBlock(const juce::AudioSourceChannelInfo& bufferToFill) {}
 
@@ -54,9 +62,13 @@ void EngineCore::releaseResources()
     // restarted due to a setting change.
     // For more details, see the help for AudioProcessor::releaseResources()
 }
+*/
 
 //==============================================================================
-bool EngineCore::isAtMaxVolume()
+// this function is bugged atm, since the message thread is not running
+// looking for a lock free solution, since runDispatchLoop() locks the whole 
+// thread until it is stopped
+void EngineCore::timerCallback()
 {
     // This callback is called every 100ms (see constructor) on the message thread
     // to decrease the load on the audio thread and because GUI elements should 
@@ -65,12 +77,10 @@ bool EngineCore::isAtMaxVolume()
     if (envelope->getFinished() && envelope->getActive())
     {
         double testedVolume = stopTest();
-        // std::cout << "Maximum Volume reached. You are deaf." << std::endl;
-        // std::cout << "Tested Volume: " << testedVolume << std::endl;
-        return true;
+        std::cout << "Maximum Volume reached. You are deaf." << std::endl;
+        std::cout << "Tested Volume: " << testedVolume << std::endl;
+    
     }
-    else
-        return false;
 }
 
 void EngineCore::startTest(StereoChannel channel, double testFrequency)

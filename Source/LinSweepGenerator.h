@@ -19,7 +19,7 @@ class LinSweepGenerator
 public:
     //==============================================================================
     LinSweepGenerator(double _fs, int _bufferSize, double _minValue,
-        double _maxValue, double _sweepTime);
+                      double _maxValue, double _sweepTime);
     ~LinSweepGenerator();
 
     //==============================================================================
